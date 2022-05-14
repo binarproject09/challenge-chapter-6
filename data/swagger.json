@@ -1,0 +1,499 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Car Management API",
+        "description": "OpenAPI for Car Management API",
+        "version": "1",
+        "termsOfService": "",
+        "contact": {
+            "name": "Rizki Oktavianus",
+            "email": "rizkioktav70@gmail.com",
+            "url": "https://gitlab.com/rizkioktav70"
+        },
+        "license": {
+            "name": "APACHE 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "tags": [
+        {
+            "name": "Cars",
+            "description": "API for cars in the system"
+        },
+        {
+            "name": "Users",
+            "description": "API for users in the system"
+        }
+    ],
+    "servers": [
+        {
+            "description": "Car Management API Server",
+            "url": "http://localhost:8000/{env}",
+            "variables": {
+                "env": {
+                    "description": "Server Environment",
+                    "default": "api/v1",
+                    "enum": [
+                        "api/v1",
+                        "dev"
+                    ]
+                }
+            }
+        }
+    ],
+    "externalDocs": {
+        "url": "https://swagger.io/docs/specification/about/",
+        "description": "OpenAPI Guide"
+    },
+    "paths": {
+        "/accessadmin/cars": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Get All Cars",
+                "description": "Get all car which is not deleted",
+                "responses": {
+                    "200": {
+                        "description": "Success get all cars",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "plate": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "description": "Example success get all car",
+                                        "value": [
+                                            {
+                                                "id": 1,
+                                                "plate": "DBH-3491",
+                                                "manufacture": "Ford",
+                                                "model": "F150",
+                                                "rentPerDay": 200000,
+                                                "capacity": 2,
+                                                "description": " Brake assist. Leather-wrapped shift knob. Glove box lamp. Air conditioning w/in-cabin microfilter.",
+                                                "availableAt": "2022-03-23T15:49:05.563Z",
+                                                "transmission": "Automatic",
+                                                "available": true,
+                                                "type": "Sedan",
+                                                "year": 2022,
+                                                "createdBy": "babangoktap70",
+                                                "updatedBy": null,
+                                                "isDeleted": false,
+                                                "deletedBy": null,
+                                                "createdAt": "2022-05-13T13:34:20.432Z",
+                                                "updatedAt": "2022-05-13T13:34:20.432Z"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "plate": "VPT-9753",
+                                                "manufacture": "BMW",
+                                                "model": "M5",
+                                                "rentPerDay": 900000,
+                                                "capacity": 6,
+                                                "description": " 6.1L SRT V8 \"Hemi\" engine.",
+                                                "availableAt": null,
+                                                "transmission": "Manual",
+                                                "available": true,
+                                                "type": "Hatchback",
+                                                "year": 2018,
+                                                "createdBy": "babangoktap70",
+                                                "updatedBy": null,
+                                                "isDeleted": false,
+                                                "deletedBy": null,
+                                                "createdAt": "2022-05-13T13:44:11.314Z",
+                                                "updatedAt": "2022-05-13T13:44:11.314Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "CarAuth": []
+                    }
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Create New Car By",
+                "description": "Create one car by admin or superadmin only",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarSchemaReqBody"
+                            },
+                            "examples": {
+                                "dummy_input": {
+                                    "description": "Example Create New Car",
+                                    "value": {
+                                        "plate": "DBH-3491",
+                                        "manufacture": "Ford",
+                                        "model": "F150",
+                                        "rentPerDay": 200000,
+                                        "capacity": 2,
+                                        "description": " Brake assist. Leather-wrapped shift knob. Glove box lamp. Air conditioning w/in-cabin microfilter.",
+                                        "availableAt": "2022-03-23T15:49:05.563Z",
+                                        "transmission": "Automatic",
+                                        "available": true,
+                                        "type": "Sedan",
+                                        "year": 2022
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succes create new car",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cars/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "CarAuth": []
+                    }
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Get Spesific Car",
+                "description": "Update car by admin or superadmin only",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get spesific car"
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "CarAuth": []
+                    }
+                ],
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Update Existing Car",
+                "description": "Update car by admin or superadmin only",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CarSchemaReqBody"
+                            },
+                            "examples": {
+                                "dummy_input": {
+                                    "description": "Example Create New Car",
+                                    "value": {
+                                        "plate": "DBH-3491",
+                                        "manufacture": "Ford",
+                                        "model": "F150",
+                                        "rentPerDay": 200000,
+                                        "capacity": 2,
+                                        "description": " Brake assist. Leather-wrapped shift knob. Glove box lamp. Air conditioning w/in-cabin microfilter.",
+                                        "availableAt": "2022-03-23T15:49:05.563Z",
+                                        "transmission": "Automatic",
+                                        "available": true,
+                                        "type": "Sedan",
+                                        "year": 2022
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update spesific car"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create new user",
+                "description": "Create new user as member",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success creating new user"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login user",
+                "description": "Login user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "superadmin": {
+                                    "description": "login as superadmin",
+                                    "value": {
+                                        "username": "babangoktap70",
+                                        "email": "banggantenk70@gmail.com",
+                                        "password": "bangoktap70"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success login"
+                    }
+                }
+            }
+        },
+        "/users/{id}/update-admin": {
+            "put": {
+                "security": [
+                    {
+                        "CarAuth": []
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Change user role to admin",
+                "description": "Change user role to admin by superadmin only",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id for changing role to admin",
+                        "schema": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "isAdmin": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update role"
+                    }
+                }
+            }
+        },
+        "/whoami": {
+            "get": {
+                "security": [
+                    {
+                        "CarAuth": []
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Show data user who logged in",
+                "description": "Show data user who logged in at the moment",
+                "responses": {
+                    "200": {
+                        "description": "Succes show data user who logged in"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "CarAuth": {
+                "description": "Authentication for Car Management API",
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "Car id for spesific car",
+                "schema": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                }
+            }
+        },
+        "schemas": {
+            "CarSchemaReqBody": {
+                "type": "object",
+                "properties": {
+                    "plate": {
+                        "type": "string"
+                    },
+                    "manufacture": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "rentPerDay": {
+                        "type": "integer"
+                    },
+                    "capacity": {
+                        "type": "integer",
+                        "default": 2
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "transmission": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "string"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "specs": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "availableAt": {
+                        "type": "string"
+                    },
+                    "isDeleted": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "updatedBy": {
+                        "type": "string",
+                        "default": null
+                    },
+                    "deletedBy": {
+                        "type": "string",
+                        "default": null
+                    }
+                }
+            }
+        }
+    }
+}
