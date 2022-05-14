@@ -1,3 +1,6 @@
+# Pemberitahuan..!
+    Setiap kali melakukan push pasti akan keliatan nama email yang berbeda diatasnya, mungkin karena leptop yang sya gunakan sudah pernah terhubung sama akun github yang lain
+
 # Binar: Express.js
 
 Repository ini ditujukan sebagai boilerplate dalam membuat sebuah HTTP Server menggunakan Express.js
